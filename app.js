@@ -10,19 +10,25 @@ const addNewJoke = async () => {
   jokes.append(newLi);
 };
 const getDadJoke = async () => {
-  const config = { headers: { Accept: "application/json" } };
-  const res = await axios.get("https://icanhazdadjoke.com/", config);
-  return res.data.joke;
+  try {
+    const config = { headers: { Accept: "application/json" } };
+    const res = await axios.get("https://icanhazdadjoke.com/", config);
+    return res.data.joke;
+  } catch (e) {
+    console.log("error", e);
+  }
 };
 
 button.addEventListener("click", addNewJoke);
 buttonRemove.addEventListener("click", function () {
   const jokeItems = document.querySelectorAll("#joke li");
-  jokeItems.forEach((item) => item.remove());
+  for (const i of jokeItems) {
+    i.remove();
+  }
+  //   jokeItems.forEach((item) => item.remove());
 });
 
 buttonRemoveSingle.addEventListener("click", function () {
-    
   const lastJoke = jokes.lastElementChild; // Get the last <li> element
   if (lastJoke) {
     lastJoke.remove(); // Remove the last <li> element if it exists
